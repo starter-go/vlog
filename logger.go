@@ -17,12 +17,12 @@ const (
 
 // Logger 是最核心的日志接口
 type Logger interface {
-	Trace(args ...interface{})
-	Debug(args ...interface{})
-	Info(args ...interface{})
-	Warn(args ...interface{})
-	Error(args ...interface{})
-	Fatal(args ...interface{})
+	Trace(fmt string, args ...interface{})
+	Debug(fmt string, args ...interface{})
+	Info(fmt string, args ...interface{})
+	Warn(fmt string, args ...interface{})
+	Error(fmt string, args ...interface{})
+	Fatal(fmt string, args ...interface{})
 
 	IsTraceEnabled() bool
 	IsDebugEnabled() bool

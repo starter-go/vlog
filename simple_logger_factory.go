@@ -46,42 +46,42 @@ func (inst *SimpleLogger) arr(src ...interface{}) []interface{} {
 }
 
 // Trace ...
-func (inst *SimpleLogger) Trace(args ...interface{}) {
+func (inst *SimpleLogger) Trace(fmt string, args ...interface{}) {
 	msg := &Message{Level: TRACE}
 	msg.Arguments = inst.arr(args...)
 	inst.chain.DoFilter(msg)
 }
 
 // Debug ...
-func (inst *SimpleLogger) Debug(args ...interface{}) {
+func (inst *SimpleLogger) Debug(fmt string, args ...interface{}) {
 	msg := &Message{Level: DEBUG}
 	msg.Arguments = inst.arr(args...)
 	inst.chain.DoFilter(msg)
 }
 
 // Info ...
-func (inst *SimpleLogger) Info(args ...interface{}) {
+func (inst *SimpleLogger) Info(fmt string, args ...interface{}) {
 	msg := &Message{Level: INFO}
 	msg.Arguments = inst.arr(args...)
 	inst.chain.DoFilter(msg)
 }
 
 // Warn ...
-func (inst *SimpleLogger) Warn(args ...interface{}) {
+func (inst *SimpleLogger) Warn(fmt string, args ...interface{}) {
 	msg := &Message{Level: WARN}
 	msg.Arguments = inst.arr(args...)
 	inst.chain.DoFilter(msg)
 }
 
 // Error ...
-func (inst *SimpleLogger) Error(args ...interface{}) {
+func (inst *SimpleLogger) Error(fmt string, args ...interface{}) {
 	msg := &Message{Level: ERROR}
 	msg.Arguments = inst.arr(args...)
 	inst.chain.DoFilter(msg)
 }
 
 // Fatal ...
-func (inst *SimpleLogger) Fatal(args ...interface{}) {
+func (inst *SimpleLogger) Fatal(fmt string, args ...interface{}) {
 	msg := &Message{Level: FATAL}
 	msg.Arguments = inst.arr(args...)
 	inst.chain.DoFilter(msg)

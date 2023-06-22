@@ -3,7 +3,7 @@ package main
 import (
 	"errors"
 
-	"bitwormhole.com/starter/vlog"
+	"github.com/starter-go/vlog"
 )
 
 func main() {

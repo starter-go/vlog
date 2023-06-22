@@ -1,6 +1,6 @@
 package vlog
 
 const (
-	theMoudleName    = "bitwormhole.com/starter/vlog"
+	theMoudleName    = "github.com/starter-go/vlog"
 	theMoudleVersion = "v0.0.1"
 )

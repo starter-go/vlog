@@ -1,3 +1,3 @@
-module bitwormhole.com/starter/vlog
+module github.com/starter-go/vlog
 
 go 1.18
