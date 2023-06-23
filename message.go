@@ -4,7 +4,7 @@ import "time"
 
 // Message 表示一条日志记录
 type Message struct {
-	Arguments []interface{}
+	Arguments []any
 	Error     error
 	Level     Level
 	Text      string

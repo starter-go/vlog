@@ -1,32 +1,32 @@
 package vlog
 
 // Trace 输出一条等级为 [TRACE] 的日志记录
-func Trace(fmt string, args ...interface{}) {
+func Trace(fmt string, args ...any) {
 	GetLogger().Trace(fmt, args...)
 }
 
 // Debug 输出一条等级为 [DEBUG] 的日志记录
-func Debug(fmt string, args ...interface{}) {
+func Debug(fmt string, args ...any) {
 	GetLogger().Debug(fmt, args...)
 }
 
 // Info 输出一条等级为 [INFO] 的日志记录
-func Info(fmt string, args ...interface{}) {
+func Info(fmt string, args ...any) {
 	GetLogger().Info(fmt, args...)
 }
 
 // Warn 输出一条等级为 [WARN] 的日志记录
-func Warn(fmt string, args ...interface{}) {
+func Warn(fmt string, args ...any) {
 	GetLogger().Warn(fmt, args...)
 }
 
 // Error 输出一条等级为 [ERROR] 的日志记录
-func Error(fmt string, args ...interface{}) {
+func Error(fmt string, args ...any) {
 	GetLogger().Error(fmt, args...)
 }
 
 // Fatal 输出一条等级为 [FATAL] 的日志记录
-func Fatal(fmt string, args ...interface{}) {
+func Fatal(fmt string, args ...any) {
 	GetLogger().Fatal(fmt, args...)
 }
 
