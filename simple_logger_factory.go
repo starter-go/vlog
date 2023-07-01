@@ -48,6 +48,7 @@ func (inst *SimpleLogger) arr(src ...interface{}) []interface{} {
 // Trace ...
 func (inst *SimpleLogger) Trace(fmt string, args ...interface{}) {
 	msg := &Message{Level: TRACE}
+	msg.Format = fmt
 	msg.Arguments = inst.arr(args...)
 	inst.chain.DoFilter(msg)
 }
@@ -55,6 +56,7 @@ func (inst *SimpleLogger) Trace(fmt string, args ...interface{}) {
 // Debug ...
 func (inst *SimpleLogger) Debug(fmt string, args ...interface{}) {
 	msg := &Message{Level: DEBUG}
+	msg.Format = fmt
 	msg.Arguments = inst.arr(args...)
 	inst.chain.DoFilter(msg)
 }
@@ -62,6 +64,7 @@ func (inst *SimpleLogger) Debug(fmt string, args ...interface{}) {
 // Info ...
 func (inst *SimpleLogger) Info(fmt string, args ...interface{}) {
 	msg := &Message{Level: INFO}
+	msg.Format = fmt
 	msg.Arguments = inst.arr(args...)
 	inst.chain.DoFilter(msg)
 }
@@ -69,6 +72,7 @@ func (inst *SimpleLogger) Info(fmt string, args ...interface{}) {
 // Warn ...
 func (inst *SimpleLogger) Warn(fmt string, args ...interface{}) {
 	msg := &Message{Level: WARN}
+	msg.Format = fmt
 	msg.Arguments = inst.arr(args...)
 	inst.chain.DoFilter(msg)
 }
@@ -76,6 +80,7 @@ func (inst *SimpleLogger) Warn(fmt string, args ...interface{}) {
 // Error ...
 func (inst *SimpleLogger) Error(fmt string, args ...interface{}) {
 	msg := &Message{Level: ERROR}
+	msg.Format = fmt
 	msg.Arguments = inst.arr(args...)
 	inst.chain.DoFilter(msg)
 }
@@ -83,6 +88,7 @@ func (inst *SimpleLogger) Error(fmt string, args ...interface{}) {
 // Fatal ...
 func (inst *SimpleLogger) Fatal(fmt string, args ...interface{}) {
 	msg := &Message{Level: FATAL}
+	msg.Format = fmt
 	msg.Arguments = inst.arr(args...)
 	inst.chain.DoFilter(msg)
 }

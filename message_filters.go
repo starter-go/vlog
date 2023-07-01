@@ -70,7 +70,7 @@ func (inst *FormatterFilter) format(msg *Message) string {
 	builder := strings.Builder{}
 	inst.formatTime(msg, &builder)
 	inst.formatLevel(msg, &builder)
-	inst.formatArgs(msg.Arguments, &builder)
+	inst.formatArgs(msg.Format, msg.Arguments, &builder)
 	return builder.String()
 }
 
@@ -108,29 +108,32 @@ func (inst *FormatterFilter) formatTime(msg *Message, builder *strings.Builder) 
 	builder.WriteString(str)
 }
 
-func (inst *FormatterFilter) formatArgs(args []interface{}, builder *strings.Builder) {
-	for _, a := range args {
-		str1, ok := a.(string)
-		if ok {
-			builder.WriteString(str1)
-			continue
-		}
+func (inst *FormatterFilter) formatArgs(format string, args []any, builder *strings.Builder) {
+	// for _, a := range args {
+	// 	str1, ok := a.(string)
+	// 	if ok {
+	// 		builder.WriteString(str1)
+	// 		continue
+	// 	}
 
-		str2, ok := a.(Stringer)
-		if ok {
-			builder.WriteString(str2.String())
-			continue
-		}
+	// 	str2, ok := a.(Stringer)
+	// 	if ok {
+	// 		builder.WriteString(str2.String())
+	// 		continue
+	// 	}
 
-		err, ok := a.(error)
-		if ok {
-			builder.WriteString(err.Error())
-			continue
-		}
+	// 	err, ok := a.(error)
+	// 	if ok {
+	// 		builder.WriteString(err.Error())
+	// 		continue
+	// 	}
 
-		str3 := fmt.Sprint(a)
-		builder.WriteString(str3)
-	}
+	// 	str3 := fmt.Sprint(a)
+	// 	builder.WriteString(str3)
+	// }
+
+	str := fmt.Sprintf(format, args...)
+	builder.WriteString(str)
 }
 
 ////////////////////////////////////////////////////////////////////////////////

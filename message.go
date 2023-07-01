@@ -6,6 +6,7 @@ import "time"
 type Message struct {
 	Arguments []any
 	Error     error
+	Format    string
 	Level     Level
 	Text      string
 	Timestamp time.Time
