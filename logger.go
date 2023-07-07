@@ -1,20 +1,5 @@
 package vlog
 
-// Level 表示日志的等级
-type Level int
-
-// 定义日志等级
-const (
-	ALL   Level = 0 // 把允许的输出等级设置为 ALL，可以输出所有的日志
-	TRACE Level = 1
-	DEBUG Level = 2
-	INFO  Level = 3
-	WARN  Level = 4
-	ERROR Level = 5
-	FATAL Level = 6
-	NONE  Level = 99 // 把允许的输出等级设置为 NONE，禁止输出任何等级的日志
-)
-
 // Logger 是最核心的日志接口
 type Logger interface {
 	Trace(fmt string, args ...any)
