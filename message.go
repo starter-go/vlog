@@ -22,7 +22,24 @@ type MessageFilterChain interface {
 	DoFilter(msg *Message)
 }
 
+// MessageFilterGroup 表示一个日志消息过滤器组
+type MessageFilterGroup interface {
+	GetFilterChain() MessageFilterChain
+}
+
 // Stringer 表示一个可字符化的接口
 type Stringer interface {
 	String() string
+}
+
+// MessageFilterRegistration 表示一个日志过滤器注册信息
+type MessageFilterRegistration struct {
+	Order  int
+	Name   string
+	Filter MessageFilter
+}
+
+// MessageFilterRegistry 表示一个日志过滤器注册器
+type MessageFilterRegistry interface {
+	ListLogFilterRegistration() []*MessageFilterRegistration
 }
