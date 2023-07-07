@@ -15,6 +15,9 @@ type Logger interface {
 	IsWarnEnabled() bool
 	IsErrorEnabled() bool
 	IsFatalEnabled() bool
+
+	ForSender(sender any) Logger
+	ForTag(tag string) Logger
 }
 
 // LoggerFactory 是用来创建 Logger 的接口

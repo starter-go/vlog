@@ -37,6 +37,16 @@ func (inst *SimpleLogger) _Impl() Logger {
 	return inst
 }
 
+// ForSender 虽然但是 SimpleLogger 不支持 sender
+func (inst *SimpleLogger) ForSender(sender any) Logger {
+	return inst
+}
+
+// ForTag 虽然但是 SimpleLogger 不支持 tag
+func (inst *SimpleLogger) ForTag(tag string) Logger {
+	return inst
+}
+
 func (inst *SimpleLogger) arr(src ...interface{}) []interface{} {
 	dst := make([]interface{}, 0)
 	for _, item := range src {

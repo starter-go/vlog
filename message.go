@@ -8,6 +8,8 @@ type Message struct {
 	Error     error
 	Format    string
 	Level     Level
+	Tag       string
+	Sender    any
 	Text      string
 	Timestamp time.Time
 }
