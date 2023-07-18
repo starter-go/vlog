@@ -24,3 +24,8 @@ type Logger interface {
 type LoggerFactory interface {
 	Create() Logger
 }
+
+// LoggerHolder 是用来获取 Logger 的接口
+type LoggerHolder interface {
+	Logger() Logger
+}
