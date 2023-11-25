@@ -37,25 +37,25 @@ func IsTraceEnabled() bool {
 
 // IsDebugEnabled 判断是否需要输出等级为 [DEBUG] 的日志记录
 func IsDebugEnabled() bool {
-	return GetLogger().IsTraceEnabled()
+	return GetLogger().IsDebugEnabled()
 }
 
 // IsInfoEnabled 判断是否需要输出等级为 [INFO] 的日志记录
 func IsInfoEnabled() bool {
-	return GetLogger().IsTraceEnabled()
+	return GetLogger().IsInfoEnabled()
 }
 
 // IsWarnEnabled 判断是否需要输出等级为 [WARN] 的日志记录
 func IsWarnEnabled() bool {
-	return GetLogger().IsTraceEnabled()
+	return GetLogger().IsWarnEnabled()
 }
 
 // IsErrorEnabled 判断是否需要输出等级为 [ERROR] 的日志记录
 func IsErrorEnabled() bool {
-	return GetLogger().IsTraceEnabled()
+	return GetLogger().IsErrorEnabled()
 }
 
 // IsFatalEnabled 判断是否需要输出等级为 [FATAL] 的日志记录
 func IsFatalEnabled() bool {
-	return GetLogger().IsTraceEnabled()
+	return GetLogger().IsFatalEnabled()
 }
