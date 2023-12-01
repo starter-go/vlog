@@ -1,3 +1,3 @@
 module github.com/starter-go/vlog
 
-go 1.18
+go 1.20
