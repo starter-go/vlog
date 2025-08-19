@@ -14,6 +14,11 @@ type Message struct {
 	Timestamp time.Time
 }
 
+// MessageHandler  表示一个能接收并处理日志消息的接口
+type MessageHandler interface {
+	HandleMessage(msg *Message)
+}
+
 // MessageFilter 表示一个日志消息过滤器
 type MessageFilter interface {
 	DoFilter(msg *Message, chain MessageFilterChain)
