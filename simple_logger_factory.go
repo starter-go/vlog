@@ -26,53 +26,54 @@ func (inst *SimpleLoggerFactory) Create() Logger {
 	chain := builder.Create()
 
 	// inner
-	inner := new(SimpleLogger)
+	// inner := new(SimpleLogger)
 
-	// wrapper
-	wrapper := new(LoggerWrapper)
+	// adapter
+	ada := new(LoggerAdapter)
 
 	// bind
-	wrapper.sender = wrapper
-	wrapper.inner = inner
-	wrapper.tag = "simple-logger"
+	ada.SetTargetChain(chain)
+	ada.SetLevelAccepted(level)
+	ada.SetSender(ada) // use self
+	ada.SetTag("simple-logger")
 
-	inner.facade = wrapper
-	inner.chain = chain
-	inner.acceptedLevel = level
+	// inner.facade = wrapper
+	// inner.chain = chain
+	// inner.acceptedLevel = level
 
-	return wrapper
+	return ada
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
-// SimpleLogger 实现一个简单的日志接口
-type SimpleLogger struct {
-	chain MessageFilterChain
+// // SimpleLogger 实现一个简单的日志接口
+// type SimpleLogger struct {
+// 	chain MessageFilterChain
 
-	acceptedLevel Level
+// 	acceptedLevel Level
 
-	facade Logger
-}
+// 	facade Logger
+// }
 
-func (inst *SimpleLogger) _Impl() LoggerBase {
-	return inst
-}
+// func (inst *SimpleLogger) _Impl() LoggerBase {
+// 	return inst
+// }
 
-func (inst *SimpleLogger) IsLevelEnabled(l Level) bool {
-	return l >= inst.acceptedLevel
-}
+// func (inst *SimpleLogger) IsLevelEnabled(l Level) bool {
+// 	return l >= inst.acceptedLevel
+// }
 
-func (inst *SimpleLogger) Log(level Level, fmt string, args ...any) {
-	inst.facade.Log(level, fmt, args...)
-}
+// func (inst *SimpleLogger) Log(level Level, fmt string, args ...any) {
+// 	inst.facade.Log(level, fmt, args...)
+// }
 
-func (inst *SimpleLogger) ForLog(level Level, fn func(logger Logger)) {
-	inst.facade.ForLog(level, fn)
-}
+// func (inst *SimpleLogger) ForLog(level Level, fn func(logger Logger)) {
+// 	inst.facade.ForLog(level, fn)
+// }
 
-func (inst *SimpleLogger) HandleMessage(msg *Message) {
-	inst.chain.DoFilter(msg)
-}
+// func (inst *SimpleLogger) HandleMessage(msg *Message) {
+// 	inst.chain.DoFilter(msg)
+// }
 
 //  func (inst *SimpleLogger) xxxxxxxx ( ) Logger  {}
 
