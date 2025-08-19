@@ -2,6 +2,6 @@ package vlog
 
 const (
 	theMoudleName     = "github.com/starter-go/vlog"
-	theMoudleVersion  = "v0.9.8"
+	theMoudleVersion  = "v0.9.9"
 	theMoudleRevision = 98
 )

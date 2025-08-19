@@ -47,16 +47,14 @@ func (inst *SimpleLogger) ForTag(tag string) Logger {
 	return inst
 }
 
-func (inst *SimpleLogger) arr(src ...interface{}) []interface{} {
-	dst := make([]interface{}, 0)
-	for _, item := range src {
-		dst = append(dst, item)
-	}
+func (inst *SimpleLogger) arr(src ...any) []any {
+	dst := make([]any, 0)
+	dst = append(dst, src...)
 	return dst
 }
 
 // Trace ...
-func (inst *SimpleLogger) Trace(fmt string, args ...interface{}) {
+func (inst *SimpleLogger) Trace(fmt string, args ...any) {
 	msg := &Message{Level: TRACE}
 	msg.Format = fmt
 	msg.Arguments = inst.arr(args...)
@@ -64,7 +62,7 @@ func (inst *SimpleLogger) Trace(fmt string, args ...interface{}) {
 }
 
 // Debug ...
-func (inst *SimpleLogger) Debug(fmt string, args ...interface{}) {
+func (inst *SimpleLogger) Debug(fmt string, args ...any) {
 	msg := &Message{Level: DEBUG}
 	msg.Format = fmt
 	msg.Arguments = inst.arr(args...)
@@ -72,7 +70,7 @@ func (inst *SimpleLogger) Debug(fmt string, args ...interface{}) {
 }
 
 // Info ...
-func (inst *SimpleLogger) Info(fmt string, args ...interface{}) {
+func (inst *SimpleLogger) Info(fmt string, args ...any) {
 	msg := &Message{Level: INFO}
 	msg.Format = fmt
 	msg.Arguments = inst.arr(args...)
@@ -80,7 +78,7 @@ func (inst *SimpleLogger) Info(fmt string, args ...interface{}) {
 }
 
 // Warn ...
-func (inst *SimpleLogger) Warn(fmt string, args ...interface{}) {
+func (inst *SimpleLogger) Warn(fmt string, args ...any) {
 	msg := &Message{Level: WARN}
 	msg.Format = fmt
 	msg.Arguments = inst.arr(args...)
@@ -88,7 +86,7 @@ func (inst *SimpleLogger) Warn(fmt string, args ...interface{}) {
 }
 
 // Error ...
-func (inst *SimpleLogger) Error(fmt string, args ...interface{}) {
+func (inst *SimpleLogger) Error(fmt string, args ...any) {
 	msg := &Message{Level: ERROR}
 	msg.Format = fmt
 	msg.Arguments = inst.arr(args...)
@@ -96,11 +94,23 @@ func (inst *SimpleLogger) Error(fmt string, args ...interface{}) {
 }
 
 // Fatal ...
-func (inst *SimpleLogger) Fatal(fmt string, args ...interface{}) {
+func (inst *SimpleLogger) Fatal(fmt string, args ...any) {
 	msg := &Message{Level: FATAL}
 	msg.Format = fmt
 	msg.Arguments = inst.arr(args...)
 	inst.chain.DoFilter(msg)
+}
+
+func (inst *SimpleLogger) Log(level Level, fmt string, args ...any) {
+	msg := &Message{}
+	msg.Level = level
+	msg.Format = fmt
+	msg.Arguments = inst.arr(args...)
+	inst.chain.DoFilter(msg)
+}
+
+func (inst *SimpleLogger) IsLevelEnabled(l Level) bool {
+	return l >= inst.acceptedLevel
 }
 
 // IsTraceEnabled ...
@@ -131,4 +141,81 @@ func (inst *SimpleLogger) IsErrorEnabled() bool {
 // IsFatalEnabled ...
 func (inst *SimpleLogger) IsFatalEnabled() bool {
 	return FATAL >= inst.acceptedLevel
+}
+
+func (inst *SimpleLogger) ForFatal(fn func(l Logger)) Logger {
+	l := inst._Impl()
+	if inst.isReadyForCallback(fn) {
+		if inst.IsFatalEnabled() {
+			fn(l)
+		}
+	}
+	return l
+}
+
+func (inst *SimpleLogger) ForError(fn func(l Logger)) Logger {
+	l := inst._Impl()
+	if inst.isReadyForCallback(fn) {
+		if inst.IsErrorEnabled() {
+			fn(l)
+		}
+	}
+	return l
+}
+func (inst *SimpleLogger) ForWarn(fn func(l Logger)) Logger {
+	l := inst._Impl()
+	if inst.isReadyForCallback(fn) {
+		if inst.IsWarnEnabled() {
+			fn(l)
+		}
+	}
+	return l
+}
+func (inst *SimpleLogger) ForInfo(fn func(l Logger)) Logger {
+	l := inst._Impl()
+	if inst.isReadyForCallback(fn) {
+		if inst.IsInfoEnabled() {
+			fn(l)
+		}
+	}
+	return l
+}
+func (inst *SimpleLogger) ForDebug(fn func(l Logger)) Logger {
+	l := inst._Impl()
+	if inst.isReadyForCallback(fn) {
+		if inst.IsDebugEnabled() {
+			fn(l)
+		}
+	}
+	return l
+}
+
+func (inst *SimpleLogger) ForTrace(fn func(l Logger)) Logger {
+	l := inst._Impl()
+	if inst.isReadyForCallback(fn) {
+		if inst.IsTraceEnabled() {
+			fn(l)
+		}
+	}
+	return l
+}
+
+func (inst *SimpleLogger) ForLog(level Level, fn func(logger Logger)) Logger {
+	l := inst._Impl()
+	if inst.isReadyForCallback(fn) {
+		if inst.IsLevelEnabled(level) {
+			fn(l)
+		}
+	}
+	return l
+}
+
+func (inst *SimpleLogger) isReadyForCallback(fn func(l Logger)) bool {
+	if fn == nil {
+		return false
+	}
+	if inst == nil {
+		return false
+	}
+	return true
 }

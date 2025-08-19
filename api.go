@@ -30,6 +30,11 @@ func Fatal(fmt string, args ...any) {
 	GetLogger().Fatal(fmt, args...)
 }
 
+// ForLog 以回调的方式输出一条等级为 l 的日志记录
+func ForLog(l Level, fn func(l Logger)) {
+	GetLogger().ForLog(l, fn)
+}
+
 // IsTraceEnabled 判断是否需要输出等级为 [TRACE] 的日志记录
 func IsTraceEnabled() bool {
 	return GetLogger().IsTraceEnabled()
