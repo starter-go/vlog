@@ -25,21 +25,14 @@ func (inst *SimpleLoggerFactory) Create() Logger {
 
 	chain := builder.Create()
 
-	// inner
-	// inner := new(SimpleLogger)
-
 	// adapter
 	ada := new(LoggerAdapter)
 
 	// bind
 	ada.SetTargetChain(chain)
 	ada.SetLevelAccepted(level)
-	ada.SetSender(ada) // use self
+	ada.SetSender(inst) // use self
 	ada.SetTag("simple-logger")
-
-	// inner.facade = wrapper
-	// inner.chain = chain
-	// inner.acceptedLevel = level
 
 	return ada
 }
