@@ -6,7 +6,7 @@ import "time"
 type Message struct {
 	Arguments []any
 	Error     error
-	Format    string
+	Format    string // 这是用户输入的原始格式, 不包含 message 的头部
 	Level     Level
 	Tag       string
 	Sender    any
