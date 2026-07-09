@@ -4,6 +4,7 @@ import (
 	"reflect"
 	"strconv"
 	"strings"
+	"time"
 )
 
 func FormatMessageHead(format string, msg *Message) string {
@@ -71,18 +72,30 @@ type innerMessageHeadFormattingContext struct {
 
 func (inst *innerMessageHeadFormattingContext) initWithMessage(msg *Message) {
 
-	const (
-		fnameYear  = "YYYY"
-		fnameMonth = "MM"
-		fnameDay   = "DD"
-		fnameHour  = "H"
-		fnameMin   = "M"
-		fnameSec   = "S"
-		fnameMS    = "SSS"
+	// year
+	// month
+	// day
+	// hh
+	// mm
+	// ss
+	// sss
+	// zone
+	// tag
+	// level
 
-		fnameTag    = "TAG"
-		fnameLevel  = "LEVEL"
-		fnameSender = "SENDER"
+	const (
+		fnameYear  = ".YEAR"
+		fnameMonth = ".MONTH"
+		fnameDay   = ".DAY"
+		fnameHour  = ".HH"
+		fnameMin   = ".MM"
+		fnameSec   = ".SS"
+		fnameMS    = ".SSS"
+		fnameZone  = ".ZONE"
+
+		fnameTag    = ".TAG"
+		fnameLevel  = ".LEVEL"
+		fnameSender = ".SENDER"
 	)
 
 	table := inst.fields
@@ -104,12 +117,27 @@ func (inst *innerMessageHeadFormattingContext) initWithMessage(msg *Message) {
 	table[fnameMin] = inst.innerFormatInt(m, 2)
 	table[fnameSec] = inst.innerFormatInt(s, 2)
 	table[fnameMS] = inst.innerFormatInt(sss, 3)
+	table[fnameZone] = inst.innerFormatZone(ts)
 
 	table[fnameTag] = msg.Tag
 	table[fnameLevel] = inst.innerFormatLevel(msg.Level)
 	table[fnameSender] = inst.innerFormatSender(msg)
 
 	inst.fields = table
+}
+
+func (inst *innerMessageHeadFormattingContext) innerFormatZone(t time.Time) string {
+	const ref = "UTC"
+	_, off := t.Zone()
+	off = off / 3600
+	if off < 0 {
+		str := strconv.Itoa(off)
+		return ref + str
+	} else if off > 0 {
+		str := strconv.Itoa(off)
+		return ref + "+" + str
+	}
+	return ref
 }
 
 func (inst *innerMessageHeadFormattingContext) innerFormatSender(msg *Message) string {

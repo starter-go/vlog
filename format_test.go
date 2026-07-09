@@ -7,7 +7,7 @@ import (
 
 func TestFormatMsgHead(t *testing.T) {
 
-	f := "[{{  Level }}]  {{YYYY}}-{{MM}}-{{DD}}  {{H}}:{{M}}:{{S}}.{{SSS}}  [tag:'{{tag}}' sender:'{{sender}}']"
+	f := "[{{  .Level }}]  {{.Year}}-{{.Month}}-{{.Day}}  {{.HH}}:{{.MM}}:{{.SS}}.{{.SSS}}  [zone:'{{.zone }}'  tag:'{{.tag}}' sender:'{{.sender}}']"
 	m := new(Message)
 
 	m.Timestamp = time.Now()
