@@ -1,27 +1,9 @@
 package vlog
 
-import "time"
-
-type innerLoggerAdapter struct {
-	sender        any
-	tag           string
-	target        MessageHandler
-	acceptedLevel Level
-}
-
-////////////////////////////////////////////////////////////////////////////////
-
-type innerLoggerChainAdapter struct {
-	chain MessageFilterChain
-}
-
-func (inst *innerLoggerChainAdapter) _impl() MessageHandler {
-	return inst
-}
-
-func (inst *innerLoggerChainAdapter) HandleMessage(msg *Message) {
-	inst.chain.DoFilter(msg)
-}
+import (
+	"net/http"
+	"time"
+)
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -71,8 +53,33 @@ func (inst *LoggerAdapter) innerCloneMyself() *LoggerAdapter {
 	return o2
 }
 
-func (inst *LoggerAdapter) IsLevelEnabled(l Level) bool {
-	return l >= inst.acceptedLevel
+func (inst *LoggerAdapter) IsLevelEnabled(want Level) bool {
+	have := inst.GetLevel()
+	return (want >= have)
+}
+
+func (inst *LoggerAdapter) GetLevel() Level {
+	l := inst.acceptedLevel
+	if l == 0 {
+		l = inst.innerReadLevel()
+		inst.acceptedLevel = l
+	}
+	return l
+}
+
+func (inst *LoggerAdapter) innerReadLevel() Level {
+
+	m := new(Message)
+	m.Method = http.MethodGet
+	m.Location = "/vlog/config/level"
+
+	inst.HandleMessage(m)
+
+	code := m.Status
+	if code != http.StatusOK {
+		return INFO
+	}
+	return m.Level
 }
 
 func (inst *LoggerAdapter) ForLog(level Level, fn func(logger Logger)) {
@@ -209,3 +216,29 @@ func (inst *LoggerAdapter) ForWarn(fn func(logger Logger)) {
 	const lv = WARN
 	inst.ForLog(lv, fn)
 }
+
+////////////////////////////////////////////////////////////////////////////////
+
+type innerLoggerAdapter struct {
+	sender        any
+	tag           string
+	target        MessageHandler
+	acceptedLevel Level
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+type innerLoggerChainAdapter struct {
+	chain MessageFilterChain
+}
+
+func (inst *innerLoggerChainAdapter) _impl() MessageHandler {
+	return inst
+}
+
+func (inst *innerLoggerChainAdapter) HandleMessage(msg *Message) {
+	inst.chain.DoFilter(msg)
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// EOF

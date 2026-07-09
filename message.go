@@ -2,6 +2,10 @@ package vlog
 
 import "time"
 
+type Group string
+
+type Order int
+
 // Message 表示一条日志记录
 type Message struct {
 	Arguments []any
@@ -12,6 +16,9 @@ type Message struct {
 	Sender    any
 	Text      string
 	Timestamp time.Time
+	Method    string // use: http.Method, 表示需要的操作
+	Status    int    // use: http.Status, 表示操作的结果
+	Location  string
 }
 
 // MessageHandler  表示一个能接收并处理日志消息的接口
@@ -41,12 +48,17 @@ type Stringer interface {
 
 // MessageFilterRegistration 表示一个日志过滤器注册信息
 type MessageFilterRegistration struct {
-	Order  int
-	Name   string
-	Filter MessageFilter
+	Name    string
+	Enabled bool
+	Order   Order
+	Group   Group
+	Filter  Filter
 }
 
 // MessageFilterRegistry 表示一个日志过滤器注册器
 type MessageFilterRegistry interface {
 	ListLogFilterRegistration() []*MessageFilterRegistration
 }
+
+////////////////////////////////////////////////////////////////////////////////
+// EOF

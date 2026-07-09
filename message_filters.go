@@ -170,14 +170,4 @@ func (inst *ConsoleDisplayFilter) DoFilter(msg *Message, chain MessageFilterChai
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-
-type Filter = MessageFilter
-
-type FilterChain = MessageFilterChain
-
-type FilterRegistration = MessageFilterRegistration
-
-type FilterRegistry = MessageFilterRegistry
-
-////////////////////////////////////////////////////////////////////////////////
 // EOF

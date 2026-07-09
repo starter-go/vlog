@@ -64,3 +64,18 @@ func IsErrorEnabled() bool {
 func IsFatalEnabled() bool {
 	return GetLogger().IsFatalEnabled()
 }
+
+////////////////////////////////////////////////////////////////////////////////
+
+type Filter = MessageFilter
+
+type FilterChain = MessageFilterChain
+
+type FilterRegistration = MessageFilterRegistration
+
+type FilterRegistry = MessageFilterRegistry
+
+type FilterChainBuilder = MessageFilterChainBuilder
+
+////////////////////////////////////////////////////////////////////////////////
+// EOF
