@@ -44,7 +44,7 @@ func (inst *GroupFilterChainBuilder) Len() int {
 func (inst *GroupFilterChainBuilder) Less(i1, i2 int) bool {
 	n1 := inst.items[i1].Order
 	n2 := inst.items[i2].Order
-	return (n1 < n2)
+	return (n1 > n2)
 }
 func (inst *GroupFilterChainBuilder) Swap(i1, i2 int) {
 	l := inst.items
